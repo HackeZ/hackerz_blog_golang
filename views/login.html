@@ -1,0 +1,73 @@
+{{template "header"}}
+  <title>登陆 - HackerZ 的博客</title>
+</head>
+
+<body>
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      {{template "navbar" .}}
+    </div>
+  </div>
+
+
+<div class="container" style="width:500px">
+    <form class="form-horizontal" method="POST" action="/login">
+              <div class="form-group">
+                <label class="col-lg-4 control-label">Account：</label>
+                <div class="col-lg-6">
+                  <input id="username" class="form-control" name="username" placeholder="Account">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-lg-4 control-label">Password：</label>
+                <div class="col-lg-6">
+                  <input id="pwd" type="password" class="form-control" name="pwd" placeholder="Password">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-lg-offset-4 col-lg-10">
+                  <div class="checkbox">
+                    <label>
+                        <input name="autoLogin" type="checkbox">autoLogin
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <a href="/login"><button type="submit" class="btn btn-default" onclick="return checkInput();">Login in</button></a>
+                    <button class="btn btn-default" onclick="return backToHome();">Return</button>
+                    <script type="text/javascript">
+                        function backToHome() {
+                            window.location.href = "/";
+                            return false;
+                        }
+
+                        function checkInput() {
+                            var uname = document.getElementById("uname");
+                            if (uname.value.length == 0) {
+                                alert("Please enter the account number");
+                                return false;
+                            }
+
+                            var pwd = document.getElementById("pwd");
+                            if (pwd.value.length == 0) {
+                                alert("Please enter a password");
+                                return false;
+                            }
+                        }
+                    </script>
+                </div>
+              </div>
+            </form>
+
+</div>
+  
+
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

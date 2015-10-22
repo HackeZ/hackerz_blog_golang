@@ -1,0 +1,55 @@
+{{template "header"}}
+        <title>Edit Topic - HackerZ 的博客</title>
+    </head>
+
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                {{template "navbar" .}}
+            </div>  
+        </div>
+        
+        <div class="container">
+            <h1>Edit Topic</h1>
+            <form method="post" action="/topic">
+                <input type="hidden" name="tid" value="{{.Tid}}">
+                <div class="form-group">
+                    <label>Title：</label>
+                    <input type="text" class="form-control" name="title" value="{{.Topic.Title}}">
+                </div>
+
+                <div class="form-group">
+                  <label>Topic Category</label>
+                  <input type="text" class="form-control" name="category" value="{{.Topic.Category}}">
+                </div>
+
+                <div class="form-group">
+                  <label>Topic Label</label>
+                  <input type="text" class="form-control" name="label" value="{{.Topic.Label}}">
+                </div>
+
+                <div class="form-group">
+                    <label>Content：</label>
+                    <textarea name="content" cols="30" rows="10" class="form-control" id="text-input" oninput="this.editor.update()">{{.Topic.Content}}</textarea>
+                </div>
+                <div id="preview"> </div>
+                <button type="submit" class="btn btn-default">Alter</button>
+            </form>
+        </div>
+
+        <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/static/js/markdown.js"></script>
+        <script>
+          function Editor(input, preview) {
+            this.update = function () {
+              preview.innerHTML = markdown.toHTML(input.value);
+            };
+            input.editor = this;
+            this.update();
+          }
+          var $ = function (id) { return document.getElementById(id); };
+          new Editor($("text-input"), $("preview"));
+        </script>
+
+{{template "topic_foot"}}

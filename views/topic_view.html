@@ -1,0 +1,67 @@
+{{template "header"}}
+      <title>{{.Topic.Title}} - HackerZ 的博客</title>
+    </head>
+  
+  <body>
+    <!-- 文章详情 -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        {{template "navbar" .}}
+      </div>  
+    </div>
+
+    <div class="container">
+      {{$label := .Label}}
+      {{with .Topic}}
+      <h1 style="color:#808080">{{.Title}}</h1><h5>Category: {{.Category}}</h5>
+      <div class="page-header">
+        <h5> Labels:
+          {{range $label}}
+          <a href="/?label={{.}}">{{.}}</a>
+          {{end}}
+        </h5><br>
+        <div id="content" class="content"></div>
+        {{end}}
+      </div>
+    </div>
+
+    <!-- 提交评论 -->
+    <div class="container">
+      <h2 style="color:#87CEEB">Reply:</h2>
+      {{$tid := .Topic.Id}}
+      {{$isLogin := .IsLogin}}
+      {{range .Replies}}
+      <div class="page-header">
+      <h4>{{.Name}}  <small>{{dateformat .Created "2006-01-02 15:04:05"}} {{if $isLogin}}<a href="/reply/delete?tid={{$tid}}&rid={{.Id}}">Delete</a>{{end}}</small></h4>
+      {{.Content}}
+      </div>
+      {{end}}
+      <h4>Add Reply:</h4>
+      <form method="POST" action="/reply/add">
+        <input type="hidden" name="tid" value="{{.Topic.Id}}">
+
+        <div class="form-group">
+          <label>Nick Name：</label>
+          <input type="text" class="form-control" name="nickname">
+        </div>
+
+        <div class="form-group">
+            <label>Content：</label>
+            <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+
+    <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/markdown.js"></script>
+    <script type="text/javascript">
+      function mark2HTML(input, preview) {
+        preview.innerHTML = markdown.toHTML(input);
+      }
+      var $ = function (id) { return document.getElementById(id); };
+      new mark2HTML({{.Topic.Content}}, $("content"));
+    </script>
+
+{{template "topic_foot"}}

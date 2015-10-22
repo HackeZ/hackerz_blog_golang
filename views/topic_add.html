@@ -1,0 +1,54 @@
+{{template "header"}}
+      <title>Add Topic - HackerZ 的博客</title>
+    </head>
+  
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        {{template "navbar" .}}
+      </div>  
+    </div>
+    
+    <div class="container">
+      <h1>Add Topic</h1>
+      <form action="/topic" method="POST">
+        <div class="form-group">
+          <label>Topic Title:</label>
+          <input type="text" name="title" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label>Topic Category:</label>
+          <input type="text" class="form-control" name="category">
+        </div>
+
+        <div class="form-group">
+          <label>Topic Label:</label>
+          <input type="text" class="form-control" name="label">
+        </div>
+
+        <div class="form-group">
+          <label>Topic Content:</label>
+          <textarea name="content" cols="30" rows="10" class="form-control" id="text-input" oninput="this.editor.update()"></textarea>
+        </div>
+        <div id="preview"> </div>
+        <button type="submit" class="btn btn-default">Add</button>
+      </form>
+    </div>
+
+    <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/markdown.js"></script>
+    <script>
+      function Editor(input, preview) {
+        this.update = function () {
+          preview.innerHTML = markdown.toHTML(input.value);
+        };
+        input.editor = this;
+        this.update();
+      }
+      var $ = function (id) { return document.getElementById(id); };
+      new Editor($("text-input"), $("preview"));
+    </script>
+    
+{{template "topic_foot"}}
